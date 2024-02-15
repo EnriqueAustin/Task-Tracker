@@ -1,4 +1,8 @@
 {
+  "author": {
+    "name": "Enrique Austin",
+    "email": "antonio123bo2@gmail.com"
+  },
   "name": "Electron_Tracker",
   "version": "1.0.0",
   "description": "A simple work tracking application built with Electron.",
@@ -33,14 +37,14 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "assets/TT.ico"
+      "icon": "assets/TT1.ico"
     },
     "linux": {
       "target": [
         "AppImage",
         "deb"
       ],
-      "icon": "assets/TT.png"
+      "icon": "assets/TT2.png"
     }
   }
 }
