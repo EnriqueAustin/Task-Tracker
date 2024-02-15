@@ -1,0 +1,46 @@
+{
+  "name": "Electron_Tracker",
+  "version": "1.0.0",
+  "description": "A simple work tracking application built with Electron.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.2.3",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.Maxuim.Work_Tracker",
+    "productName": "Time Tracker",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!**/*.ts",
+      "!*.code-workspace",
+      "!LICENSE.md",
+      "!package-lock.json",
+      "!src/",
+      "!tsconfig.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/TT.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/TT.png"
+    }
+  }
+}
