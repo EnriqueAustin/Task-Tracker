@@ -5,7 +5,7 @@ const os = require('os');
 
 let win = null;
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
 
 function createWindow() {
     win = new BrowserWindow({
@@ -18,13 +18,18 @@ function createWindow() {
         alwaysOnTop: true,
     });
 
-    // Load Vue app in development
-    // const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../vueapp/dist/index.html')}`;
-    // Load Vue app in development
-    // const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../vueapp/src/App.vue')}`;
-    
-    const startUrl = isDev ? 'http://localhost:8080' : `file://${path.join(__dirname, '../vueapp/dist/index.html')}`;
-    win.loadFile(startUrl);
+    let startUrl;
+    if (isDev) {
+        startUrl = 'http://localhost:8080'; // Vue dev server URL
+        console.log('Loading from Vue dev server:', startUrl);
+    } else {
+        // Correctly construct the file path for production
+        const prodPath = path.join(__dirname, 'vueapp/dist/index.html');
+        startUrl = `file://${prodPath}`;
+        console.log('Loading production build:', startUrl);
+    }
+
+    win.loadURL(startUrl); // Use loadURL for both local files and http URLs
 
     win.on('closed', () => {
         win = null; // Dereference the window object

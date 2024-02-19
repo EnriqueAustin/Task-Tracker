@@ -7,7 +7,8 @@
   "scripts": {
     "vue-serve": "vue-cli-service serve",
     "electron-start": "electron .",
-    "start": "concurrently \"cd vueapp && npm run serve\" \"npm run electron-start\"",
+    "start": "npm run electron-start",
+    "start-dev": "concurrently \"cd vueapp && npm run serve\" \"npm run electron-start\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
