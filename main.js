@@ -5,6 +5,8 @@ const os = require('os');
 
 let win = null;
 
+const isDev = process.env.NODE_ENV === 'development';
+
 function createWindow() {
     win = new BrowserWindow({
         width: 300,
@@ -16,7 +18,13 @@ function createWindow() {
         alwaysOnTop: true,
     });
 
-    win.loadFile('index.html');
+    // Load Vue app in development
+    // const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../vueapp/dist/index.html')}`;
+    // Load Vue app in development
+    // const startUrl = process.env.ELECTRON_START_URL || `file://${path.join(__dirname, '../vueapp/src/App.vue')}`;
+    
+    const startUrl = isDev ? 'http://localhost:8080' : `file://${path.join(__dirname, '../vueapp/dist/index.html')}`;
+    win.loadFile(startUrl);
 
     win.on('closed', () => {
         win = null; // Dereference the window object
