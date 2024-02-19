@@ -1,28 +1,26 @@
 {
-  "author": {
-    "name": "Enrique Austin",
-    "email": "antonio123bo2@gmail.com"
-  },
-  "name": "Electron_Tracker",
+  "author": "",
+  "name": "TimeTracker",
   "version": "1.0.0",
   "description": "A simple work tracking application built with Electron.",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "vue-serve": "vue-cli-service serve",
+    "electron-start": "electron .",
+    "start": "concurrently \"npm run vue-serve\" \"npm run electron-start\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^28.2.3",
     "electron-builder": "^24.9.1"
   },
   "build": {
-    "appId": "com.Maxuim.Work_Tracker",
-    "productName": "Time Tracker",
+    "appId": "com.maxuim.timetracker",
+    "productName": "TimeTracker",
     "directories": {
       "output": "dist"
     },
@@ -46,5 +44,8 @@
       ],
       "icon": "assets/TT2.png"
     }
+  },
+  "dependencies": {
+    "vue": "^3.4.19"
   }
 }
