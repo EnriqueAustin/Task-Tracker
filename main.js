@@ -5,8 +5,8 @@ const os = require('os');
 
 let win = null;
 
-const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
-// var isDev
+// const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
+var isDev
 
 function createWindow() {
     win = new BrowserWindow({
