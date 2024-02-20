@@ -6,14 +6,16 @@ const os = require('os');
 let win = null;
 
 const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
+// var isDev
 
 function createWindow() {
     win = new BrowserWindow({
-        width: 300,
-        height: 200,
+        width: 400,
+        height: 300,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: false,
+            contextIsolation: true,
         },
         alwaysOnTop: true,
     });
@@ -99,15 +101,19 @@ app.on('activate', () => {
 });
 
 ipcMain.on('quit-app', () => {
+    if (!win) return; // Check if the window exists
+
     const choice = dialog.showMessageBoxSync(win, {
       type: 'question',
       buttons: ['Yes', 'No'],
       title: 'Confirm',
       message: 'Are you sure you want to quit?'
     });
-    if (choice === 0) { // The 'Yes' option
+    // console.log(choice); // Helpful for debugging
+    if (choice === 0) { // If 'Yes' is chosen, then quit the app
       app.quit();
     }
+    // If 'No' is chosen, do nothing, thus not calling app.quit()
 });
 
 ipcMain.on('save-log', (event, workLog) => {
@@ -131,6 +137,6 @@ ipcMain.on('save-log', (event, workLog) => {
       }
 });
 
-ipcMain.on('quit-app', () => {
-    app.quit();
-});
+// ipcMain.on('quit-app', () => {
+//     app.quit();
+// });
