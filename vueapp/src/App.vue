@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <h1>Work Tracker</h1>
+    <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
     <div class="input-group">
       <input
         type="text"
@@ -21,6 +22,7 @@ export default {
   data() {
     return {
       workInput: '',
+      errorMessage: '', // Added for displaying error messages
     };
   },
   mounted() {
@@ -31,8 +33,12 @@ export default {
       if (this.workInput.trim()) {
         window.electronAPI.saveLog(this.workInput);
         this.workInput = ''; // Clear input after saving
+        this.errorMessage = ''; // Clear any previous error message
       } else {
-        alert('Please enter what you are working on.');
+        this.errorMessage = 'Please enter what you are working on.';
+        this.$nextTick(() => {
+          this.$refs.inputField.focus(); // Refocus on the input field
+        });
       }
     },
     exitApp() {
@@ -45,18 +51,23 @@ export default {
 <style scoped>
 #app {
   max-width: 600px;
-  margin: 50px auto;
+  margin: 20px auto;
   text-align: center;
 }
 
+.error-message {
+  color: #f44336;
+  margin-bottom: 15px;
+}
+
 .input-group {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 input {
   width: 70%;
   padding: 10px;
-  margin-right: 10px;
+  margin: 10px;
   font-size: 16px;
 }
 

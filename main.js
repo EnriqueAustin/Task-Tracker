@@ -1,12 +1,13 @@
-const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog, Tray } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
 let win = null;
+let tray = null;
 
-// const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
-var isDev
+const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged;
+// var isDev
 
 function createWindow() {
     win = new BrowserWindow({
@@ -55,6 +56,19 @@ setInterval(promptForWorkLog, minutesToMilliseconds(1));
 
 app.whenReady().then(() => {
     createWindow();
+    if (!tray) {
+        tray = new Tray(path.join(__dirname, './assets/TT.png'));
+        const trayMenu = Menu.buildFromTemplate([
+            { label: 'Show App', click: () => win ? win.show() : createWindow() },
+            { label: 'Exit', click: () => app.quit() }
+        ]);
+        tray.setToolTip('My Electron App');
+        tray.setContextMenu(trayMenu);
+
+        tray.on('click', () => {
+            win ? win.show() : createWindow();
+        });
+    }
 
     const menu = Menu.buildFromTemplate([
       {
